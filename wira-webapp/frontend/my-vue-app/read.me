@@ -1,0 +1,34 @@
+<template>
+  <div>
+    <h1>User Rankings</h1>
+    <ul>
+      <li v-for="user in users" :key="user.char_id">
+        {{ user.username }} - Score: {{ user.reward_score }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      users: []  // Changed from players to users
+    };
+  },
+  created() {
+    this.fetchUserRankings();  // Changed from fetchPlayerRankings to fetchUserRankings
+  },
+  methods: {
+    async fetchUserRankings() {
+      try {
+        const response = await axios.get('http://localhost:8080/api/rankings');
+        this.users = response.data;  // Updated to users
+      } catch (error) {
+        console.error('Error fetching user rankings:', error);  // Updated to users
+      }
+    }
+  }
+};
+</script>
